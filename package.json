@@ -10,6 +10,7 @@
     "build": "npm run clean && npm run build:ts && npm run build:gyp",
     "build:ts": "tsc --project tsconfig.build.json",
     "build:gyp": "node-gyp rebuild",
+    "build:ci": "npm run clean && npm run build:ts && cross-env npm run build:gyp",
     "prebuild": "prebuild --all -r napi --strip",
     "clean": "node-gyp clean && rimraf dist",
     "typecheck": "tsc --noEmit",
@@ -17,8 +18,8 @@
     "lint:fix": "esw --color --fix --ext .ts src demo",
     "lint:watch": "esw --color --fix --watch --cache --ext .ts src demo",
     "format": "prettier --write src demo",
-    "release": "standard-version",
-    "release:pre": "standard-version --prerelease",
+    "release": "standard-version && git push --follow-tags origin master",
+    "release:pre": "standard-version --prerelease && git push --follow-tags origin master",
     "generate:readme-toc": "markdown-toc -i --bullets=\"-\" --maxdepth=4 README.md"
   },
   "binary": {
@@ -33,7 +34,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/paymoapp/node-active-window"
+    "url": "https://github.com/glitter-ai/node-active-window.git"
   },
   "keywords": [
     "node",
@@ -42,12 +43,16 @@
     "window"
   ],
   "author": "Paymo SRL",
+  "contributors": [
+    "glitter-ai (https://github.com/glitter-ai)"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^17.0.35",
     "@types/ws": "^8.5.3",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
